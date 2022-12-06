@@ -1,14 +1,14 @@
 import { styled } from "..";
 
 export const HomeContainer = styled("main", {
- display: "flex",
- width: "100%",
- maxWidth: "calc(100vw - ((100vw - 1180) / 2))",
- marginLeft: "auto",
- minHeight: 656
-})
+  display: "flex",
+  width: "100%",
+  maxWidth: "calc(100vw - ((100vw - 1180px) / 2))",
+  marginLeft: "auto",
+  minHeight: 656,
+});
 
-export const Product = styled("div", {
+export const Product = styled("a", {
   background: "linear-gradient(180deg, #1ea483 0%, #7465d4 100%)",
   borderRadius: "8",
   cursor: "pointer",
@@ -19,7 +19,7 @@ export const Product = styled("div", {
   justifyContent: "center",
 
   img: {
-    objectFit: "cover"
+    objectFit: "cover",
   },
 
   footer: {
@@ -33,7 +33,7 @@ export const Product = styled("div", {
 
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
 
     backgroundColor: "rgba(0, 0, 0, 0.6)",
 
@@ -42,21 +42,21 @@ export const Product = styled("div", {
     transition: "all 0.2s ease-in-out",
 
     strong: {
-      fontSize: "$lg"
+      fontSize: "$lg",
+      color: "$gray100",
     },
 
     span: {
-      fontSize: '$xl',
+      fontSize: "$xl",
       fontWeight: "bold",
-      color: "$green300"
-    }
+      color: "$green300",
+    },
   },
 
-  '&:hover': {
+  "&:hover": {
     footer: {
-      transform: 'translateY(0%)',
+      transform: "translateY(0%)",
       opacity: 1,
-    }
-  }
-
-})
+    },
+  },
+});
