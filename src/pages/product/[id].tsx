@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { GetStaticPaths, GetStaticProps } from "next"
-import Image from "next/image"
 import axios from "axios"
+import { GetStaticPaths, GetStaticProps } from "next"
+import Head from "next/head"
+import Image from "next/image"
+import { useState } from "react"
 import Stripe from "stripe"
 import { stripe } from "../../lib/stripe"
-import { ProductContainer, ImageContainer, ProductDetails } from "../../styles/pages/product"
+import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product"
 
 interface ProductProps {
   product: {
@@ -39,21 +40,26 @@ export default function Product({ product }: ProductProps) {
   }
 
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} alt="" />
-      </ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
+      <ProductContainer>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
+        </ImageContainer>
 
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
-        <p>{product.description}</p>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
+          <p>{product.description}</p>
 
-        <button disabled={isCreatingCheckoutSession} type="submit" onClick={handleBuyProduct}>
-          Comprar agora
-        </button>
-      </ProductDetails>
-    </ProductContainer>
+          <button disabled={isCreatingCheckoutSession} type="submit" onClick={handleBuyProduct}>
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   )
 }
 
@@ -65,6 +71,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
+  if (!params?.id) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false
+      }
+    }
+  }
+
   const productId = params!.id
 
   const product = await stripe.products.retrieve(productId, {
